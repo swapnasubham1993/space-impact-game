@@ -1,0 +1,699 @@
+/* ============================================
+   NOKIA SPACE IMPACT - MONOCHROME RETRO STYLE
+   ============================================ */
+
+:root {
+    --nokia-black: #000000;
+    --nokia-white: #FFFFFF;
+    --nokia-bg: #9FA89B;
+    --nokia-screen: #8B9D77;
+    --nokia-dark-grey: #333333;
+    --nokia-mid-grey: #666666;
+    --nokia-light-grey: #999999;
+    --nokia-lighter-grey: #CCCCCC;
+    --nokia-bezel: #2C3E50;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+/* ============================================
+   NOKIA PHONE CONTAINER
+   ============================================ */
+
+.nokia-phone {
+    width: 100%;
+    max-width: 1400px;
+    background: linear-gradient(145deg, #1a1a2e, #0f0f1e);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.8),
+        inset 0 2px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.nokia-screen {
+    background: #000000;
+    border-radius: 15px;
+    border: 4px solid #1a1a2e;
+    box-shadow: 
+        inset 0 3px 15px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(100, 100, 255, 0.3),
+        0 0 50px rgba(100, 100, 255, 0.1);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16 / 9;
+}
+
+/* ============================================
+   NOKIA DECORATIVE BUTTONS (HIDDEN ON DESKTOP)
+   ============================================ */
+
+.nokia-buttons {
+    margin-top: 20px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.button-row {
+    display: flex;
+    gap: 20px;
+}
+
+.phone-btn {
+    width: 40px;
+    height: 12px;
+    background: linear-gradient(180deg, #555, #333);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dpad-physical {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(145deg, #555, #333);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dpad-center {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(145deg, #444, #222);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.phone-btn-call {
+    background: linear-gradient(180deg, #4CAF50, #2E7D32);
+    width: 50px;
+    height: 15px;
+    border-radius: 8px;
+}
+
+.phone-btn-end {
+    background: linear-gradient(180deg, #F44336, #C62828);
+    width: 50px;
+    height: 15px;
+    border-radius: 8px;
+}
+
+/* ============================================
+   SCREEN MANAGEMENT
+   ============================================ */
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--nokia-screen);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: var(--nokia-black);
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* ============================================
+   TITLE SCREEN
+   ============================================ */
+
+.title-content {
+    text-align: center;
+    padding: 20px;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.game-title {
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.nokia-text {
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.menu-btn {
+    background: var(--nokia-black);
+    color: var(--nokia-white);
+    border: 2px solid var(--nokia-black);
+    padding: 12px 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+}
+
+.menu-btn:hover {
+    background: var(--nokia-white);
+    color: var(--nokia-black);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.menu-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.footer-text {
+    margin-top: 30px;
+    font-size: 11px;
+    opacity: 0.7;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.3; }
+}
+
+/* ============================================
+   INSTRUCTIONS SCREEN
+   ============================================ */
+
+.instructions-content,
+.scores-content {
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.instructions-content h2,
+.scores-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--nokia-black);
+    padding-bottom: 10px;
+}
+
+.instructions-text h3 {
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+.instructions-text p {
+    font-size: 12px;
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
+.scores-list {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.score-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.score-entry:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   GAME CANVAS
+   ============================================ */
+
+#gameScreen {
+    display: block;
+    padding: 0;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #000000, #0a0a1a);
+    image-rendering: auto;
+}
+
+/* ============================================
+   HUD (Heads-Up Display)
+   ============================================ */
+
+.hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.hud-top {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--nokia-white);
+    font-size: 11px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hud-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.hud-label {
+    font-size: 9px;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
+
+.hud-value {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.boss-health-bar {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #ff0000;
+    border-radius: 4px;
+}
+
+.boss-label {
+    color: #ff0000;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+}
+
+.health-bar-container {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff0000;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.health-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ff6666);
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+.hud-controls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 8px;
+    pointer-events: all;
+}
+
+.hud-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    color: var(--nokia-white);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.hud-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+}
+
+.hud-btn:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   MOBILE TOUCH CONTROLS
+   ============================================ */
+
+.mobile-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    display: none;
+    pointer-events: none;
+}
+
+.joystick-area {
+    flex: 1;
+    position: relative;
+    pointer-events: all;
+}
+
+.joystick-base {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.joystick-stick {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    transition: all 0.1s;
+}
+
+.dpad {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    width: 100px;
+    height: 100px;
+    display: none;
+}
+
+.dpad-btn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: white;
+}
+
+.dpad-up {
+    top: 0;
+    left: 35px;
+}
+
+.dpad-down {
+    bottom: 0;
+    left: 35px;
+}
+
+.dpad-left {
+    left: 0;
+    top: 35px;
+}
+
+.dpad-right {
+    right: 0;
+    top: 35px;
+}
+
+.shoot-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all;
+}
+
+.shoot-btn {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 0, 0, 0.3);
+    border: 4px solid rgba(255, 0, 0, 0.6);
+    border-radius: 50%;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.1s;
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+.shoot-btn:active {
+    background: rgba(255, 0, 0, 0.6);
+    transform: scale(0.95);
+}
+
+/* ============================================
+   OVERLAYS
+   ============================================ */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    text-align: center;
+    color: var(--nokia-white);
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--nokia-white);
+    border-radius: 8px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.overlay-content h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+.final-score,
+.final-level,
+.level-info,
+.bonus-score {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.new-high-score {
+    color: #ffff00;
+    font-size: 20px;
+    font-weight: bold;
+    animation: flashGold 1s ease-in-out infinite;
+}
+
+@keyframes flashGold {
+    0%, 100% { color: #ffff00; }
+    50% { color: #ffaa00; }
+}
+
+.overlay-content .menu-btn {
+    margin: 10px;
+}
+
+/* ============================================
+   LOADING INDICATOR
+   ============================================ */
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1440px) {
+    .nokia-phone {
+        width: 95%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 1024px) {
+    body {
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .nokia-phone {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .game-title {
+        font-size: 42px;
+    }
+
+    .menu-btn {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 36px;
+    }
+
+    .menu-btn {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY & POLISH
+   ============================================ */
+
+button:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Prevent text selection during gameplay */
+#gameCanvas,
+.mobile-controls,
+.hud {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Smooth scrolling for instruction screens */
+.instructions-content,
+.scores-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--nokia-black) transparent;
+}
+
+.instructions-content::-webkit-scrollbar,
+.scores-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.instructions-content::-webkit-scrollbar-track,
+.scores-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.instructions-content::-webkit-scrollbar-thumb,
+.scores-content::-webkit-scrollbar-thumb {
+    background: var(--nokia-black);
+    border-radius: 3px;
+}

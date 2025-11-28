@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Space Impact - Nokia Classic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Nokia Phone Container -->
+    <div class="nokia-phone">
+        <!-- Nokia Screen Bezel -->
+        <div class="nokia-screen">
+            <!-- Game Title Screen -->
+            <div id="titleScreen" class="screen active">
+                <div class="title-content">
+                    <h1 class="game-title">SPACE<br>IMPACT</h1>
+                    <p class="nokia-text">NOKIA CLASSIC</p>
+                    <div class="menu-options">
+                        <button class="menu-btn" id="startBtn">START GAME</button>
+                        <button class="menu-btn" id="instructionsBtn">INSTRUCTIONS</button>
+                        <button class="menu-btn" id="highScoresBtn">HIGH SCORES</button>
+                    </div>
+                    <p class="footer-text">Press SPACE or TAP to start</p>
+                </div>
+            </div>
+
+            <!-- Instructions Screen -->
+            <div id="instructionsScreen" class="screen">
+                <div class="instructions-content">
+                    <h2>INSTRUCTIONS</h2>
+                    <div class="instructions-text">
+                        <h3>DESKTOP CONTROLS:</h3>
+                        <p>↑↓←→ - Move Ship</p>
+                        <p>SPACE - Shoot</p>
+                        <p>P - Pause</p>
+                        <p>M - Mute/Unmute</p>
+                        
+                        <h3>MOBILE CONTROLS:</h3>
+                        <p>Left Side - Movement</p>
+                        <p>Right Side - Shoot</p>
+                        
+                        <h3>OBJECTIVE:</h3>
+                        <p>Destroy enemies, collect power-ups, defeat bosses!</p>
+                        
+                        <h3>POWER-UPS:</h3>
+                        <p>♥ - Extra Life</p>
+                        <p>⚡ - Weapon Upgrade</p>
+                        <p>⛨ - Shield</p>
+                        <p>➤ - Speed Boost</p>
+                    </div>
+                    <button class="menu-btn" id="backBtn">BACK</button>
+                </div>
+            </div>
+
+            <!-- High Scores Screen -->
+            <div id="highScoresScreen" class="screen">
+                <div class="scores-content">
+                    <h2>HIGH SCORES</h2>
+                    <div id="scoresList" class="scores-list"></div>
+                    <button class="menu-btn" id="backBtn2">BACK</button>
+                </div>
+            </div>
+
+            <!-- Game Canvas -->
+            <div id="gameScreen" class="screen">
+                <canvas id="gameCanvas"></canvas>
+                
+                <!-- HUD Overlay -->
+                <div class="hud">
+                    <div class="hud-top">
+                        <div class="hud-item">
+                            <span class="hud-label">SCORE</span>
+                            <span id="scoreDisplay" class="hud-value">0</span>
+                        </div>
+                        <div class="hud-item">
+                            <span class="hud-label">LEVEL</span>
+                            <span id="levelDisplay" class="hud-value">1</span>
+                        </div>
+                        <div class="hud-item">
+                            <span class="hud-label">LIVES</span>
+                            <span id="livesDisplay" class="hud-value">♥♥♥</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Boss Health Bar (hidden by default) -->
+                    <div id="bossHealthBar" class="boss-health-bar" style="display: none;">
+                        <div class="boss-label">BOSS</div>
+                        <div class="health-bar-container">
+                            <div id="bossHealthFill" class="health-bar-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Control Buttons -->
+                    <div class="hud-controls">
+                        <button class="hud-btn" id="pauseBtn">⏸</button>
+                        <button class="hud-btn" id="muteBtn">🔊</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Touch Controls -->
+                <div class="mobile-controls">
+                    <div class="joystick-area" id="joystickArea">
+                        <div class="joystick-base">
+                            <div class="joystick-stick" id="joystickStick"></div>
+                        </div>
+                        <div class="dpad">
+                            <div class="dpad-btn dpad-up">▲</div>
+                            <div class="dpad-btn dpad-down">▼</div>
+                            <div class="dpad-btn dpad-left">◀</div>
+                            <div class="dpad-btn dpad-right">▶</div>
+                        </div>
+                    </div>
+                    <div class="shoot-area">
+                        <button class="shoot-btn" id="shootBtn">🔥<br>SHOOT</button>
+                    </div>
+                </div>
+
+                <!-- Pause Overlay -->
+                <div id="pauseOverlay" class="overlay" style="display: none;">
+                    <div class="overlay-content">
+                        <h2>PAUSED</h2>
+                        <button class="menu-btn" id="resumeBtn">RESUME</button>
+                        <button class="menu-btn" id="quitBtn">QUIT</button>
+                    </div>
+                </div>
+
+                <!-- Game Over Overlay -->
+                <div id="gameOverOverlay" class="overlay" style="display: none;">
+                    <div class="overlay-content">
+                        <h2>GAME OVER</h2>
+                        <p class="final-score">SCORE: <span id="finalScore">0</span></p>
+                        <p class="final-level">LEVEL: <span id="finalLevel">1</span></p>
+                        <p id="newHighScore" class="new-high-score" style="display: none;">NEW HIGH SCORE!</p>
+                        <button class="menu-btn" id="restartBtn">RESTART</button>
+                        <button class="menu-btn" id="mainMenuBtn">MAIN MENU</button>
+                    </div>
+                </div>
+
+                <!-- Level Complete Overlay -->
+                <div id="levelCompleteOverlay" class="overlay" style="display: none;">
+                    <div class="overlay-content">
+                        <h2>LEVEL COMPLETE!</h2>
+                        <p class="level-info">LEVEL <span id="completedLevel">1</span></p>
+                        <p class="bonus-score">BONUS: <span id="bonusScore">0</span></p>
+                        <button class="menu-btn" id="nextLevelBtn">NEXT LEVEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nokia Phone Buttons (decorative) -->
+        <div class="nokia-buttons">
+            <div class="button-row">
+                <div class="phone-btn"></div>
+                <div class="phone-btn"></div>
+                <div class="phone-btn"></div>
+            </div>
+            <div class="dpad-physical">
+                <div class="dpad-center"></div>
+            </div>
+            <div class="button-row">
+                <div class="phone-btn phone-btn-call"></div>
+                <div class="phone-btn phone-btn-end"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading">
+        <div class="loading-spinner"></div>
+        <p>LOADING...</p>
+    </div>
+
+    <!-- Game Scripts -->
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
