@@ -35,6 +35,13 @@ export class UIManager {
             this.restartGame();
         });
         
+        // Restart from HUD button
+        document.getElementById('restartHudBtn')?.addEventListener('click', () => {
+            if (confirm('Restart the game? Your current progress will be lost.')) {
+                this.restartGame();
+            }
+        });
+        
         // Quit button
         document.getElementById('quitBtn')?.addEventListener('click', () => {
             this.pauseOverlay.style.display = 'none';
