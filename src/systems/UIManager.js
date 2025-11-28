@@ -29,6 +29,12 @@ export class UIManager {
             this.pauseOverlay.style.display = 'none';
         });
         
+        // Restart from pause button
+        document.getElementById('restartPauseBtn')?.addEventListener('click', () => {
+            this.pauseOverlay.style.display = 'none';
+            this.restartGame();
+        });
+        
         // Quit button
         document.getElementById('quitBtn')?.addEventListener('click', () => {
             this.pauseOverlay.style.display = 'none';

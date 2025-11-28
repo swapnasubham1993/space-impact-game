@@ -33,7 +33,7 @@ export class InputManager {
             }
 
             // Handle special keys
-            if (e.key === 'p' || e.key === 'P') {
+            if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
                 this.togglePause();
             }
             if (e.key === 'm' || e.key === 'M') {

@@ -712,8 +712,15 @@ body {
 
 .overlay-content h2 {
     font-size: 32px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     letter-spacing: 3px;
+}
+
+.pause-hint {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 20px 0;
+    font-style: italic;
 }
 
 .final-score,
