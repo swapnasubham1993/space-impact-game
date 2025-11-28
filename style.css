@@ -324,6 +324,9 @@ body {
     text-align: left;
     color: #FFFFFF;
     line-height: 1.8;
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .instruction-section {
@@ -332,6 +335,8 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    display: block;
+    visibility: visible;
 }
 
 .instruction-section h3 {
@@ -389,14 +394,53 @@ body {
 
 .scores-list {
     margin: 20px 0;
-    font-size: 14px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 600px;
+    color: #FFFFFF;
 }
 
 .score-entry {
     display: flex;
     justify-content: space-between;
-    padding: 8px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 12px 20px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(68, 136, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.score-entry:hover {
+    background: rgba(68, 136, 255, 0.1);
+    border-color: rgba(68, 136, 255, 0.5);
+    transform: translateX(5px);
+}
+
+.score-entry:first-child {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: rgba(255, 215, 0, 0.5);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.score-rank {
+    color: #88AAFF;
+    min-width: 40px;
+    font-weight: bold;
+}
+
+.score-details {
+    flex: 1;
+    text-align: left;
+    padding: 0 20px;
+}
+
+.score-points {
+    color: #FFD700;
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
 }
 
 .score-entry:nth-child(odd) {
@@ -434,7 +478,9 @@ body {
 
 .hud-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
     padding: 10px 15px;
     background: rgba(0, 0, 0, 0.85);
     color: var(--nokia-white);
@@ -448,7 +494,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    min-width: 80px;
+    min-width: 100px;
 }
 
 .hud-label {

@@ -181,15 +181,23 @@ class SpaceImpactGame {
         const scores = storageManager.getHighScores();
         
         if (scores.length === 0) {
-            scoresList.innerHTML = '<p style="text-align: center; margin-top: 20px;">No high scores yet!</p>';
+            scoresList.innerHTML = `
+                <div style="text-align: center; margin-top: 40px; color: rgba(255, 255, 255, 0.6);">
+                    <p style="font-size: 20px; margin-bottom: 10px;">🎮</p>
+                    <p style="font-size: 16px;">No high scores yet!</p>
+                    <p style="font-size: 14px; margin-top: 10px;">Play the game to set your first score.</p>
+                </div>
+            `;
         } else {
             let html = '';
             scores.forEach((entry, index) => {
                 const date = new Date(entry.date).toLocaleDateString();
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
                 html += `
                     <div class="score-entry">
-                        <span>${index + 1}. Level ${entry.level}</span>
-                        <span>${entry.score}</span>
+                        <span class="score-rank">${medal} ${index + 1}.</span>
+                        <span class="score-details">Level ${entry.level} - ${date}</span>
+                        <span class="score-points">${entry.score.toLocaleString()} pts</span>
                     </div>
                 `;
             });
