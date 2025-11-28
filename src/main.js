@@ -64,6 +64,9 @@ class SpaceImpactGame {
         // Set up menu system
         this.setupMenus(storageManager);
         
+        // Detect and show mobile controls on touch devices
+        this.setupMobileControls();
+        
         // Hide loading indicator
         document.getElementById('loadingIndicator').style.display = 'none';
         
@@ -71,6 +74,36 @@ class SpaceImpactGame {
         console.log('%c✅ Game initialized successfully! Ready to play!', 'color: #00FF00; font-weight: bold');
         console.log('%cPress START or SPACE to begin your mission, Commander! 🚀', 'color: #FFAA00');
         console.log('');
+    }
+
+    setupMobileControls() {
+        // Detect if device has touch capability
+        const isTouchDevice = ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0) || 
+                             (navigator.msMaxTouchPoints > 0);
+        
+        // Check if it's a mobile device based on screen size
+        const isMobile = window.innerWidth <= 1024;
+        
+        if (isTouchDevice || isMobile) {
+            const mobileControls = document.querySelector('.mobile-controls');
+            if (mobileControls) {
+                mobileControls.style.display = 'flex';
+                console.log('%c📱 Mobile touch controls enabled', 'color: #00AAFF; font-weight: bold');
+            }
+        }
+        
+        // Re-check on window resize
+        window.addEventListener('resize', () => {
+            const mobileControls = document.querySelector('.mobile-controls');
+            if (mobileControls) {
+                if (window.innerWidth <= 1024 || isTouchDevice) {
+                    mobileControls.style.display = 'flex';
+                } else {
+                    mobileControls.style.display = 'none';
+                }
+            }
+        });
     }
 
     setupMenus(storageManager) {
