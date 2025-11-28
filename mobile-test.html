@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mobile Controls Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        .test-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .success { color: #00ff00; }
+        .warning { color: #ffaa00; }
+        .error { color: #ff0000; }
+        
+        .mobile-controls-demo {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            pointer-events: all;
+            z-index: 1000;
+        }
+        
+        .joystick-area-demo {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        
+        .joystick-base-demo {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        
+        .joystick-stick-demo {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .shoot-area-demo {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        
+        .shoot-btn-demo {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 50, 50, 0.4);
+            border: 4px solid rgba(255, 50, 50, 0.7);
+            border-radius: 50%;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(255, 50, 50, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎮 Mobile Controls Test</h1>
+        
+        <div class="status">
+            <strong>Touch Detection:</strong>
+            <span id="touchStatus"></span>
+        </div>
+        
+        <div class="status">
+            <strong>Screen Width:</strong>
+            <span id="screenWidth"></span>
+        </div>
+        
+        <div class="status">
+            <strong>Screen Height:</strong>
+            <span id="screenHeight"></span>
+        </div>
+        
+        <div class="status">
+            <strong>Device Type:</strong>
+            <span id="deviceType"></span>
+        </div>
+        
+        <div class="status">
+            <strong>Controls Should Show:</strong>
+            <span id="shouldShow"></span>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 18px;">
+            <p>If you see joystick (left) and shoot button (right) at the bottom,<br>
+            your mobile controls are working! ✅</p>
+        </div>
+    </div>
+    
+    <!-- Mobile Controls Demo -->
+    <div class="mobile-controls-demo">
+        <div class="joystick-area-demo">
+            <div class="joystick-base-demo">
+                <div class="joystick-stick-demo"></div>
+            </div>
+        </div>
+        <div class="shoot-area-demo">
+            <div class="shoot-btn-demo">
+                🔥<br>SHOOT
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Detect touch capability
+        const isTouchDevice = ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0) || 
+                             (navigator.msMaxTouchPoints > 0);
+        
+        // Get screen dimensions
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // Determine device type
+        let deviceType = 'Desktop';
+        if (width <= 768) deviceType = 'Mobile Phone';
+        else if (width <= 1024) deviceType = 'Tablet';
+        
+        // Should controls show?
+        const shouldShow = (isTouchDevice || width <= 1024);
+        
+        // Update display
+        document.getElementById('touchStatus').innerHTML = 
+            `<span class="${isTouchDevice ? 'success' : 'warning'}">${isTouchDevice ? '✅ Touch Enabled' : '❌ No Touch'}</span>`;
+        
+        document.getElementById('screenWidth').textContent = width + 'px';
+        document.getElementById('screenHeight').textContent = height + 'px';
+        document.getElementById('deviceType').textContent = deviceType;
+        
+        document.getElementById('shouldShow').innerHTML = 
+            `<span class="${shouldShow ? 'success' : 'error'}">${shouldShow ? '✅ YES' : '❌ NO'}</span>`;
+        
+        // Log to console
+        console.log('=== MOBILE CONTROLS TEST ===');
+        console.log('Touch Device:', isTouchDevice);
+        console.log('Screen:', width + 'x' + height);
+        console.log('Device Type:', deviceType);
+        console.log('Should Show Controls:', shouldShow);
+        console.log('============================');
+        
+        // Update on resize
+        window.addEventListener('resize', () => {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
