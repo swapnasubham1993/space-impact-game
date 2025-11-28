@@ -31,6 +31,8 @@ body {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    padding: 0;
+    margin: 0;
 }
 
 /* ============================================
@@ -47,6 +49,7 @@ body {
         0 30px 80px rgba(0, 0, 0, 0.8),
         inset 0 2px 0 rgba(255, 255, 255, 0.05);
     position: relative;
+    margin: 0 auto;
 }
 
 .nokia-screen {
@@ -408,35 +411,40 @@ body {
     height: 200px;
     display: none;
     pointer-events: none;
+    z-index: 1000;
+    touch-action: none;
 }
 
 .joystick-area {
     flex: 1;
     position: relative;
     pointer-events: all;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 20px;
 }
 
 .joystick-base {
-    position: absolute;
-    left: 30px;
-    bottom: 30px;
     width: 100px;
     height: 100px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border: 3px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .joystick-stick {
     width: 45px;
     height: 45px;
-    background: rgba(255, 255, 255, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     transition: all 0.1s;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .dpad {
@@ -484,29 +492,35 @@ body {
 .shoot-area {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
     pointer-events: all;
+    padding: 20px;
 }
 
 .shoot-btn {
     width: 100px;
     height: 100px;
-    background: rgba(255, 0, 0, 0.3);
-    border: 4px solid rgba(255, 0, 0, 0.6);
+    background: rgba(255, 50, 50, 0.4);
+    border: 4px solid rgba(255, 50, 50, 0.7);
     border-radius: 50%;
     color: white;
     font-size: 14px;
     font-weight: bold;
-    cursor: pointer;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all 0.1s;
-    margin-right: 30px;
-    margin-bottom: 30px;
+    box-shadow: 0 0 25px rgba(255, 50, 50, 0.4);
+    letter-spacing: 1px;
 }
 
 .shoot-btn:active {
-    background: rgba(255, 0, 0, 0.6);
+    background: rgba(255, 50, 50, 0.7);
+    border-color: rgba(255, 50, 50, 1);
     transform: scale(0.95);
+    box-shadow: 0 0 35px rgba(255, 50, 50, 0.8);
 }
 
 /* ============================================
@@ -643,13 +657,81 @@ body {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding: 0;
+        align-items: flex-start;
+    }
+
+    .nokia-phone {
+        border-radius: 0;
+        padding: 0;
+        max-width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nokia-screen {
+        border-radius: 0;
+        border: none;
+        flex: 1;
+        aspect-ratio: auto;
+        height: 100%;
+    }
+
+    #gameCanvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
     .game-title {
-        font-size: 36px;
+        font-size: 28px;
+        letter-spacing: 2px;
     }
 
     .menu-btn {
-        padding: 10px 20px;
+        padding: 15px 25px;
+        font-size: 14px;
+        touch-action: manipulation;
+    }
+
+    .mobile-controls {
+        display: flex !important;
+        height: 180px;
+    }
+
+    .joystick-base {
+        left: 20px;
+        bottom: 20px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .joystick-stick {
+        width: 40px;
+        height: 40px;
+    }
+
+    .shoot-btn {
+        width: 90px;
+        height: 90px;
+        margin-right: 20px;
         font-size: 12px;
+    }
+
+    .hud {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .hud-section {
+        gap: 8px;
+    }
+
+    .hud-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
     }
 }
 
@@ -673,6 +755,55 @@ button:disabled {
 .hud {
     -webkit-user-select: none;
     user-select: none;
+}
+
+/* Portrait orientation for mobile */
+@media (max-width: 768px) and (orientation: portrait) {
+    .mobile-controls {
+        height: 160px;
+    }
+
+    .joystick-base,
+    .shoot-btn {
+        width: 80px;
+        height: 80px;
+    }
+
+    .joystick-stick {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Landscape orientation for mobile */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .nokia-phone {
+        height: 100vh;
+    }
+
+    .mobile-controls {
+        display: flex !important;
+        height: 140px;
+    }
+
+    .joystick-base {
+        width: 70px;
+        height: 70px;
+        left: 15px;
+        bottom: 15px;
+    }
+
+    .joystick-stick {
+        width: 30px;
+        height: 30px;
+    }
+
+    .shoot-btn {
+        width: 70px;
+        height: 70px;
+        margin-right: 15px;
+        font-size: 10px;
+    }
 }
 
 /* Smooth scrolling for instruction screens */
