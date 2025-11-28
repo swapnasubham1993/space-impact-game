@@ -5,10 +5,11 @@ export class Boss {
     constructor(gameEngine, level) {
         this.engine = gameEngine;
         this.level = level;
-        this.x = this.engine.width - 100;
-        this.y = this.engine.height / 2 - 40;
-        this.width = 80;
-        this.height = 80;
+        this.scale = gameEngine.scale || 1;
+        this.x = this.engine.width - 100 * this.scale;
+        this.y = this.engine.height / 2 - 40 * this.scale;
+        this.width = 80 * this.scale;
+        this.height = 80 * this.scale;
         this.active = true;
         
         // Health scales with level
@@ -18,7 +19,7 @@ export class Boss {
         this.scoreValue = 5000 * level;
         
         // Movement
-        this.speedY = 80;
+        this.speedY = 80 * this.scale;
         this.targetY = this.y;
         this.phase = 1;
         this.phaseTimer = 0;

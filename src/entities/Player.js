@@ -5,11 +5,17 @@
 export class Player {
     constructor(gameEngine) {
         this.engine = gameEngine;
-        this.x = 100;
+        
+        // Base dimensions (at 1280x720)
+        this.baseWidth = 60;
+        this.baseHeight = 40;
+        this.baseSpeed = 250;
+        
+        // Apply scale
+        this.updateScale(this.engine.scale);
+        
+        this.x = 100 * this.engine.scale;
         this.y = this.engine.height / 2;
-        this.width = 60;
-        this.height = 40;
-        this.speed = 250;
         this.active = true;
         
         // Weapon properties
@@ -155,13 +161,14 @@ export class Player {
             this.engine.soundManager.play('shoot');
         }
 
-        const bulletSpeed = this.rageActive ? 600 : 450;
+        const bulletSpeed = (this.rageActive ? 600 : 450) * this.engine.scale;
         const bulletX = this.x + this.width;
         const bulletY = this.y + this.height / 2;
+        const scale = this.engine.scale;
 
         // Laser beam mode
         if (this.laserActive) {
-            this.engine.bullets.push(new LaserBullet(bulletX, bulletY, bulletSpeed));
+            this.engine.bullets.push(new LaserBullet(bulletX, bulletY, bulletSpeed, scale));
             return;
         }
 
@@ -171,15 +178,15 @@ export class Player {
                 const angle = (Math.PI * 2 * i / 8) - Math.PI / 2;
                 const vx = Math.cos(angle) * bulletSpeed;
                 const vy = Math.sin(angle) * bulletSpeed;
-                this.engine.bullets.push(new Bullet(bulletX, bulletY, vx, vy, true));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY, vx, vy, true, scale));
             }
             return;
         }
 
         // Homing missiles
         if (this.homingActive) {
-            this.engine.bullets.push(new HomingBullet(this.engine, bulletX, bulletY, bulletSpeed));
-            this.engine.bullets.push(new HomingBullet(this.engine, bulletX, bulletY - 10, bulletSpeed));
+            this.engine.bullets.push(new HomingBullet(this.engine, bulletX, bulletY, bulletSpeed, scale));
+            this.engine.bullets.push(new HomingBullet(this.engine, bulletX, bulletY - 10 * scale, bulletSpeed, scale));
             return;
         }
 
@@ -187,25 +194,25 @@ export class Player {
         switch (this.weaponLevel) {
             case 1:
                 // Single bullet
-                this.engine.bullets.push(new Bullet(bulletX, bulletY, bulletSpeed, 0));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY, bulletSpeed, 0, false, scale));
                 break;
             case 2:
                 // Double bullets
-                this.engine.bullets.push(new Bullet(bulletX, bulletY - 8, bulletSpeed, 0));
-                this.engine.bullets.push(new Bullet(bulletX, bulletY + 8, bulletSpeed, 0));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY - 8 * scale, bulletSpeed, 0, false, scale));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY + 8 * scale, bulletSpeed, 0, false, scale));
                 break;
             case 3:
                 // Triple spread
-                this.engine.bullets.push(new Bullet(bulletX, bulletY, bulletSpeed, 0));
-                this.engine.bullets.push(new Bullet(bulletX, bulletY - 12, bulletSpeed, -0.3));
-                this.engine.bullets.push(new Bullet(bulletX, bulletY + 12, bulletSpeed, 0.3));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY, bulletSpeed, 0, false, scale));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY - 12 * scale, bulletSpeed * 0.9, -bulletSpeed * 0.3, false, scale));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY + 12 * scale, bulletSpeed * 0.9, bulletSpeed * 0.3, false, scale));
                 break;
             case 4:
                 // Quad rapid fire
-                this.engine.bullets.push(new Bullet(bulletX, bulletY - 10, bulletSpeed, 0));
-                this.engine.bullets.push(new Bullet(bulletX, bulletY - 3, bulletSpeed, 0));
-                this.engine.bullets.push(new Bullet(bulletX, bulletY + 3, bulletSpeed, 0));
-                this.engine.bullets.push(new Bullet(bulletX, bulletY + 10, bulletSpeed, 0));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY - 10 * scale, bulletSpeed, 0, false, scale));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY - 3 * scale, bulletSpeed, 0, false, scale));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY + 3 * scale, bulletSpeed, 0, false, scale));
+                this.engine.bullets.push(new Bullet(bulletX, bulletY + 10 * scale, bulletSpeed, 0, false, scale));
                 break;
         }
     }
@@ -439,8 +446,14 @@ export class Player {
         this.invulnerabilityTimer = duration / 1000;
     }
 
+    updateScale(scale) {
+        this.width = this.baseWidth * scale;
+        this.height = this.baseHeight * scale;
+        this.speed = this.baseSpeed * scale;
+    }
+
     reset() {
-        this.x = 50;
+        this.x = 50 * this.engine.scale;
         this.y = this.engine.height / 2;
         this.weaponLevel = 1;
         this.fireRate = 0.25;
@@ -449,6 +462,7 @@ export class Player {
         this.speedBoost = false;
         this.invulnerable = false;
         this.active = true;
+        this.updateScale(this.engine.scale);
     }
 
     getBounds() {
@@ -465,16 +479,17 @@ export class Player {
  * Bullet - Player projectile
  */
 export class Bullet {
-    constructor(x, y, speedX, speedY = 0, isMultishot = false) {
+    constructor(x, y, speedX, speedY = 0, isMultishot = false, scale = 1) {
         this.x = x;
         this.y = y;
-        this.width = 24;
-        this.height = 8;
+        this.width = 24 * scale;
+        this.height = 8 * scale;
         this.speedX = typeof speedX === 'number' && speedY === 0 ? speedX : speedX;
         this.speedY = speedY;
         this.active = true;
         this.damage = 15;
         this.isMultishot = isMultishot;
+        this.scale = scale;
     }
 
     update(dt) {
@@ -517,16 +532,17 @@ export class Bullet {
  * LaserBullet - Continuous laser beam
  */
 export class LaserBullet {
-    constructor(x, y, speed) {
+    constructor(x, y, speed, scale = 1) {
         this.x = x;
         this.y = y;
-        this.width = 1280;
-        this.height = 16;
+        this.width = 1280 * scale;
+        this.height = 16 * scale;
         this.speedX = 0;
         this.speedY = 0;
         this.active = true;
         this.damage = 25;
         this.lifetime = 0.15;
+        this.scale = scale;
     }
 
     update(dt) {
@@ -545,14 +561,14 @@ export class LaserBullet {
         gradient.addColorStop(0.5, '#FFFFFF');
         gradient.addColorStop(1, 'rgba(255, 0, 255, 0)');
         
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = 20 * this.scale;
         ctx.shadowColor = '#FF00FF';
         ctx.fillStyle = gradient;
         ctx.fillRect(this.x, this.y - this.height / 2, this.width, this.height);
         
         // Core beam
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(this.x, this.y - 4, this.width, 8);
+        ctx.fillRect(this.x, this.y - 4 * this.scale, this.width, 8 * this.scale);
         
         ctx.restore();
     }
@@ -571,18 +587,19 @@ export class LaserBullet {
  * HomingBullet - Seeks nearest enemy
  */
 export class HomingBullet {
-    constructor(engine, x, y, speed) {
+    constructor(engine, x, y, speed, scale = 1) {
         this.engine = engine;
         this.x = x;
         this.y = y;
-        this.width = 20;
-        this.height = 20;
+        this.width = 20 * scale;
+        this.height = 20 * scale;
         this.speed = speed;
         this.speedX = speed;
         this.speedY = 0;
         this.active = true;
         this.damage = 20;
         this.turnRate = 5;
+        this.scale = scale;
     }
 
     update(dt) {

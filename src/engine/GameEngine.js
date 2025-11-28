@@ -6,6 +6,8 @@ export class GameEngine {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
+        this.baseWidth = 1280;
+        this.baseHeight = 720;
         this.width = 1280;
         this.height = 720;
         this.running = false;
@@ -14,6 +16,11 @@ export class GameEngine {
         this.fps = 60;
         this.frameTime = 1000 / this.fps;
         this.accumulator = 0;
+        
+        // Responsive scaling
+        this.scale = 1;
+        this.isMobile = false;
+        this.detectDevice();
         
         // Game state
         this.state = 'menu'; // menu, playing, paused, gameover, levelcomplete
@@ -45,20 +52,61 @@ export class GameEngine {
         window.addEventListener('resize', () => this.resizeCanvas());
     }
 
+    detectDevice() {
+        // Detect mobile devices
+        const isTouchDevice = ('ontouchstart' in window) || 
+                             (navigator.maxTouchPoints > 0) || 
+                             (navigator.msMaxTouchPoints > 0);
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        
+        this.isMobile = isTouchDevice || screenWidth <= 768;
+        
+        // Adjust canvas dimensions for mobile
+        if (this.isMobile) {
+            // Mobile: smaller canvas for better performance
+            const aspectRatio = 16 / 9;
+            if (screenWidth < screenHeight) {
+                // Portrait
+                this.width = Math.min(screenWidth, 640);
+                this.height = this.width / aspectRatio;
+            } else {
+                // Landscape
+                this.width = Math.min(screenWidth, 960);
+                this.height = this.width / aspectRatio;
+            }
+        } else {
+            // Desktop: full HD
+            this.width = this.baseWidth;
+            this.height = this.baseHeight;
+        }
+        
+        // Calculate scale factor for game objects
+        this.scale = this.width / this.baseWidth;
+    }
+
     resizeCanvas() {
         const container = this.canvas.parentElement;
         const containerWidth = container.clientWidth;
         const containerHeight = container.clientHeight;
         
-        const scale = Math.min(
+        // Recalculate device-specific dimensions
+        this.detectDevice();
+        
+        const displayScale = Math.min(
             containerWidth / this.width,
             containerHeight / this.height
         );
         
         this.canvas.width = this.width;
         this.canvas.height = this.height;
-        this.canvas.style.width = `${this.width * scale}px`;
-        this.canvas.style.height = `${this.height * scale}px`;
+        this.canvas.style.width = `${this.width * displayScale}px`;
+        this.canvas.style.height = `${this.height * displayScale}px`;
+        
+        // Update player position if exists
+        if (this.player) {
+            this.player.updateScale(this.scale);
+        }
     }
 
     start() {

@@ -13,9 +13,10 @@ export class Enemy {
         this.maxHp = 10;
         this.damage = 10;
         this.scoreValue = 100;
+        this.scale = gameEngine.scale || 1;
         
         // Movement
-        this.speedX = -80;
+        this.speedX = -80 * this.scale;
         this.speedY = 0;
         this.amplitude = 0;
         this.frequency = 0;
@@ -37,30 +38,30 @@ export class Enemy {
     initializeType() {
         switch (this.type) {
             case 'A': // Straight Flyer
-                this.width = 40;
-                this.height = 30;
+                this.width = 40 * this.scale;
+                this.height = 30 * this.scale;
                 this.hp = this.maxHp = 10;
-                this.speedX = -100;
+                this.speedX = -100 * this.scale;
                 this.scoreValue = 100;
                 this.color = '#FF0000';
                 break;
                 
             case 'B': // Zig-Zag
-                this.width = 45;
-                this.height = 35;
+                this.width = 45 * this.scale;
+                this.height = 35 * this.scale;
                 this.hp = this.maxHp = 20;
-                this.speedX = -80;
-                this.amplitude = 80;
+                this.speedX = -80 * this.scale;
+                this.amplitude = 80 * this.scale;
                 this.frequency = 2;
                 this.scoreValue = 150;
                 this.color = '#FF6600';
                 break;
                 
             case 'C': // Shooter
-                this.width = 50;
-                this.height = 40;
+                this.width = 50 * this.scale;
+                this.height = 40 * this.scale;
                 this.hp = this.maxHp = 30;
-                this.speedX = -60;
+                this.speedX = -60 * this.scale;
                 this.canShoot = true;
                 this.shootInterval = 2.5;
                 this.scoreValue = 200;
@@ -68,30 +69,30 @@ export class Enemy {
                 break;
                 
             case 'D': // Kamikaze
-                this.width = 35;
-                this.height = 35;
+                this.width = 35 * this.scale;
+                this.height = 35 * this.scale;
                 this.hp = this.maxHp = 15;
-                this.speedX = -120;
+                this.speedX = -120 * this.scale;
                 this.scoreValue = 120;
                 this.color = '#FF00FF';
                 break;
                 
             case 'E': // Circular
-                this.width = 45;
-                this.height = 45;
+                this.width = 45 * this.scale;
+                this.height = 45 * this.scale;
                 this.hp = this.maxHp = 25;
-                this.speedX = -70;
-                this.amplitude = 60;
+                this.speedX = -70 * this.scale;
+                this.amplitude = 60 * this.scale;
                 this.frequency = 3;
                 this.scoreValue = 180;
                 this.color = '#00FFFF';
                 break;
                 
             case 'F': // Heavy Tank
-                this.width = 75;
-                this.height = 60;
+                this.width = 75 * this.scale;
+                this.height = 60 * this.scale;
                 this.hp = this.maxHp = 80;
-                this.speedX = -40;
+                this.speedX = -40 * this.scale;
                 this.canShoot = true;
                 this.shootInterval = 3;
                 this.scoreValue = 500;
@@ -177,7 +178,7 @@ export class Enemy {
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance > 0) {
-            const bulletSpeed = 150;
+            const bulletSpeed = 150 * this.scale;
             const vx = (dx / distance) * bulletSpeed;
             const vy = (dy / distance) * bulletSpeed;
             
@@ -186,7 +187,8 @@ export class Enemy {
                     this.x,
                     this.y + this.height / 2,
                     vx,
-                    vy
+                    vy,
+                    this.scale
                 )
             );
         }
@@ -453,15 +455,16 @@ export class Enemy {
  * EnemyBullet - Enemy projectile
  */
 export class EnemyBullet {
-    constructor(x, y, speedX, speedY) {
+    constructor(x, y, speedX, speedY, scale = 1) {
         this.x = x;
         this.y = y;
-        this.width = 10;
-        this.height = 10;
+        this.width = 10 * scale;
+        this.height = 10 * scale;
         this.speedX = speedX;
         this.speedY = speedY;
         this.active = true;
         this.damage = 10;
+        this.scale = scale;
     }
 
     update(dt) {
@@ -471,7 +474,7 @@ export class EnemyBullet {
 
     render(ctx) {
         ctx.save();
-        ctx.shadowBlur = 15;
+        ctx.shadowBlur = 15 * this.scale;
         ctx.shadowColor = '#FF0000';
         
         // Outer glow

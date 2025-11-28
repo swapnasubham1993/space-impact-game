@@ -8,14 +8,15 @@ export class PowerUp {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.width = 32;
-        this.height = 32;
+        this.scale = gameEngine.scale || 1;
+        this.width = 32 * this.scale;
+        this.height = 32 * this.scale;
         this.active = true;
         
         // Movement
-        this.speedX = -60;
+        this.speedX = -60 * this.scale;
         this.speedY = 0;
-        this.amplitude = 20;
+        this.amplitude = 20 * this.scale;
         this.frequency = 4;
         this.timer = 0;
         
