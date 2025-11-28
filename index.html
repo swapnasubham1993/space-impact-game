@@ -29,37 +29,80 @@
             <!-- Instructions Screen -->
             <div id="instructionsScreen" class="screen">
                 <div class="instructions-content">
-                    <h2>INSTRUCTIONS</h2>
+                    <h2>📖 HOW TO PLAY</h2>
                     <div class="instructions-text">
-                        <h3>DESKTOP CONTROLS:</h3>
-                        <p>↑↓←→ - Move Ship</p>
-                        <p>SPACE - Shoot</p>
-                        <p>P - Pause</p>
-                        <p>M - Mute/Unmute</p>
+                        <div class="instruction-section">
+                            <h3>🎮 DESKTOP CONTROLS</h3>
+                            <p>⌨️ <strong>Arrow Keys</strong> or <strong>WASD</strong> - Move Ship</p>
+                            <p>⌨️ <strong>SPACE</strong> - Shoot</p>
+                            <p>⌨️ <strong>P</strong> - Pause Game</p>
+                            <p>⌨️ <strong>M</strong> - Mute/Unmute Sound</p>
+                        </div>
                         
-                        <h3>MOBILE CONTROLS:</h3>
-                        <p>Left Side - Movement</p>
-                        <p>Right Side - Shoot</p>
+                        <div class="instruction-section">
+                            <h3>📱 MOBILE CONTROLS</h3>
+                            <p>👈 <strong>Left Joystick</strong> - Move Ship in any direction</p>
+                            <p>👉 <strong>Right Button (🔥)</strong> - Fire bullets</p>
+                            <p>⏸️ <strong>Top Left</strong> - Pause</p>
+                            <p>🔊 <strong>Top Right</strong> - Mute/Unmute</p>
+                        </div>
                         
-                        <h3>OBJECTIVE:</h3>
-                        <p>Destroy enemies, collect power-ups, defeat bosses!</p>
+                        <div class="instruction-section">
+                            <h3>🎯 OBJECTIVE</h3>
+                            <p>🚀 Pilot your spaceship through 5 challenging levels</p>
+                            <p>💥 Destroy enemy ships and avoid their bullets</p>
+                            <p>🎁 Collect power-ups to upgrade your ship</p>
+                            <p>👾 Defeat the boss at the end of each level</p>
+                            <p>🏆 Score points and set high scores!</p>
+                        </div>
                         
-                        <h3>POWER-UPS:</h3>
-                        <p>♥ - Extra Life</p>
-                        <p>⚡ - Weapon Upgrade</p>
-                        <p>⛨ - Shield</p>
-                        <p>➤ - Speed Boost</p>
+                        <div class="instruction-section">
+                            <h3>⭐ POWER-UPS (12 Types!)</h3>
+                            <div class="powerups-grid">
+                                <p>♥ <strong>Health</strong> - Restore 1 life</p>
+                                <p>⚡ <strong>Weapon</strong> - Upgrade weapon tier</p>
+                                <p>⛨ <strong>Shield</strong> - 5s protection</p>
+                                <p>➤ <strong>Speed</strong> - 1.8x speed boost</p>
+                                <p>━ <strong>Laser</strong> - Beam weapon 8s</p>
+                                <p>◈ <strong>Homing</strong> - Missiles track enemies</p>
+                                <p>◷ <strong>Time Slow</strong> - Slow game 30%</p>
+                                <p>💣 <strong>Bomb</strong> - Clear all enemies</p>
+                                <p>⬡ <strong>Magnet</strong> - Attract power-ups</p>
+                                <p>※ <strong>Multishot</strong> - 8-way firing</p>
+                                <p>◯ <strong>Barrier</strong> - Rotating shield orbs</p>
+                                <p>☢ <strong>Rage</strong> - Speed + fire rate</p>
+                            </div>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🛸 ENEMY TYPES</h3>
+                            <p>👾 <strong>Type A</strong> - Straight flyers (100 pts)</p>
+                            <p>👾 <strong>Type B</strong> - Zig-zag movement (150 pts)</p>
+                            <p>👾 <strong>Type C</strong> - Shooters (200 pts)</p>
+                            <p>👾 <strong>Type D</strong> - Fast kamikaze (120 pts)</p>
+                            <p>👾 <strong>Type E</strong> - Circular pattern (180 pts)</p>
+                            <p>👾 <strong>Type F</strong> - Heavy tank (500 pts)</p>
+                            <p>🦹 <strong>BOSS</strong> - End of level challenge!</p>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>💡 TIPS</h3>
+                            <p>⚠️ Keep moving to avoid enemy fire</p>
+                            <p>⚠️ Collect weapon upgrades early</p>
+                            <p>⚠️ Save bombs for difficult situations</p>
+                            <p>⚠️ Watch for boss attack patterns</p>
+                        </div>
                     </div>
-                    <button class="menu-btn" id="backBtn">BACK</button>
+                    <button class="menu-btn" id="backBtn">◀ BACK TO MENU</button>
                 </div>
             </div>
 
             <!-- High Scores Screen -->
             <div id="highScoresScreen" class="screen">
                 <div class="scores-content">
-                    <h2>HIGH SCORES</h2>
+                    <h2>🏆 HIGH SCORES</h2>
                     <div id="scoresList" class="scores-list"></div>
-                    <button class="menu-btn" id="backBtn2">BACK</button>
+                    <button class="menu-btn" id="backBtn2">◀ BACK TO MENU</button>
                 </div>
             </div>
 
